@@ -1,9 +1,17 @@
 ### IntelliJ IDEA ###
 .idea/
 *.iml
+*.iws
 out
 !**/src/main/**/out/
 !**/src/test/**/out/
+
+# Скомпилированные файлы
+*.class
+target/
+
+# Логи
+*.log
 
 ### Eclipse ###
 .apt_generated
@@ -29,3 +37,9 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+Trumbs.db
+
+# Системные файлы
+*.orig
+*.swp
+*.swo
