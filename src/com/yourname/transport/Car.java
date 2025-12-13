@@ -25,9 +25,9 @@ public class Car extends Vehicle {
 
     @Override
     public String getInfo() {
-        return "Информация об автомобиле: " + super.getInfo() + ", " + model + ", " + producerCountry
-                + ", " + color + ", " + engineVolume + ", " + numberOfDoors
-                + ", " + bodyType + ", " + complete + ", " + engineCapacity;
+       String baseInfo = super.getInfo();
+        return String.format("Автомобиль [%s]. %s, Цвет: %s, Двигатель: %.1f л., Кузов: %s",
+                model, baseInfo, color, engineVolume, bodyType);
     }
 
     public void autoStarted() {

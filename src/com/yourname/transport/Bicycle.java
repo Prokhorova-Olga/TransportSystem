@@ -23,6 +23,7 @@ public class Bicycle extends Transport {
 
     @Override
     public String getInfo() {
-        return "Информация о велосипеде: " + id + ", " + type + ", " + bicycleType;
+        String baseInfo = super.getInfo();
+        return String.format("Велосипедд. %s, Стиль: %s", baseInfo, bicycleType);
     }
 }
