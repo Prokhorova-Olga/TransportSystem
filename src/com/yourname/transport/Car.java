@@ -1,6 +1,6 @@
 package com.yourname.transport;
 
-public class Car extends Vehicle {
+public class Car extends Vehicle implements Repairable {
     private int numberOfDoors;
     private String bodyType;
     private String complete;
@@ -14,6 +14,17 @@ public class Car extends Vehicle {
         this.bodyType = bodyType;
         this.complete = complete;
         this.engineCapacity = engineCapacity;
+    }
+
+    @Override
+    public void repair() {
+        System.out.printf("Автомобиль %s %s проходит ТО. Замена масла, диагностика двигателя %.1f л.%n"
+        , model, bodyType, engineVolume);
+    }
+
+    @Override
+    public void printRepairStatus() {
+        System.out.println("Автомобиль записан на сервис.");
     }
 
 

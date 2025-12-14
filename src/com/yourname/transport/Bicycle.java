@@ -1,6 +1,6 @@
 package com.yourname.transport;
 
-public class Bicycle extends Transport {
+public class Bicycle extends Transport implements Repairable {
     private String bicycleType;
 
     public Bicycle(String id, String type, String bicycleType) {
@@ -17,6 +17,12 @@ public class Bicycle extends Transport {
     }
 
     @Override
+    public void repair() {
+        System.out.printf("Велосипед типа '%s' настроен: подкачаны шины, смазана цепь.%n"
+        , bicycleType);
+    }
+
+    @Override
     public void move() {
         System.out.println("Велосипед начал движение");
     }
@@ -24,6 +30,6 @@ public class Bicycle extends Transport {
     @Override
     public String getInfo() {
         String baseInfo = super.getInfo();
-        return String.format("Велосипедд. %s, Стиль: %s", baseInfo, bicycleType);
+        return String.format("Велосипед. %s, Стиль: %s", baseInfo, bicycleType);
     }
 }
