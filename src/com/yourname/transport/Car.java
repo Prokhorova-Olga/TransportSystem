@@ -5,15 +5,25 @@ public class Car extends Vehicle implements Repairable {
     private String bodyType;
     private String complete;
     private double engineCapacity;
+    private Driver driver;
 
     public Car(String id, String type, String model, String color, String producerCountry,
                double engineVolume, int numberOfDoors, String bodyType,
-               String complete, double engineCapacity) {
+               String complete, double engineCapacity, Driver driver) {
         super(id, type, model, producerCountry, color, engineVolume);
         this.numberOfDoors = numberOfDoors;
         this.bodyType = bodyType;
         this.complete = complete;
         this.engineCapacity = engineCapacity;
+        this.driver = driver;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 
     @Override
@@ -37,8 +47,9 @@ public class Car extends Vehicle implements Repairable {
     @Override
     public String getInfo() {
        String baseInfo = super.getInfo();
+       String driverInfo = (driver != null ? ", Водитель: " + driver.getName() : "");
         return String.format("Автомобиль [%s]. %s, Цвет: %s, Двигатель: %.1f л., Кузов: %s",
-                model, baseInfo, color, engineVolume, bodyType);
+                model, baseInfo, color, engineVolume, bodyType, driverInfo);
     }
 
     public void autoStarted() {
