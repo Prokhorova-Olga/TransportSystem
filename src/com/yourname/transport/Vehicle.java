@@ -14,6 +14,10 @@ public abstract class Vehicle extends Transport {
         this.engineVolume = engineVolume;
     }
 
+    public String getColor() {
+        return color;
+    }
+
 
 
 }

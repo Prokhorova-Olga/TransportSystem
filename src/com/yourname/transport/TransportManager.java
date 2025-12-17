@@ -1,6 +1,7 @@
 package com.yourname.transport;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TransportManager {
 
@@ -55,11 +56,10 @@ public class TransportManager {
         }
     }
 
-    public void printAllTransports() {
-        System.out.println("\n=== Весь транспорт в порядке добавления (из List<Transport>) ===");
-        for (Transport t : allTransports) {
-            System.out.println(t.getInfo());
-        }
+    public void printAllTransportsStream() {
+       allTransports.stream()
+               .map(Transport :: getInfo)
+               .forEach(System.out :: println);
     }
 
     public void sendAllRepairableToService() {
@@ -77,4 +77,29 @@ public class TransportManager {
                 System.out.println();
         }
     }
+
+    public List<Car> findCarsByColor(String color) {
+        return allTransports.stream()
+                .filter(t -> t instanceof Car)
+                .map(t -> (Car) t)
+                .filter(car -> color.equals(car.getColor()))
+                .collect(Collectors.toList());
+    }
+
+    public Map<String, List<Transport>> groupByType() {
+        return allTransports.stream()
+                .collect(Collectors.groupingBy(t -> t.type));
+    }
+
+    public List<Driver> getAllDrivers() {
+        return allTransports.stream()
+                .filter(t -> t instanceof Car)
+                .map(t -> (Car) t)
+                .map(Car :: getDriver)
+                .filter(Objects :: nonNull)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+
 }
