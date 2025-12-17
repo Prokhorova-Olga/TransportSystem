@@ -13,7 +13,10 @@ public class TransportManager {
 
     private List<Repairable> repairableItems = new ArrayList<>();
 
-    public void addTransport(Transport transport) {
+    public void addTransport(Transport transport) throws DuplicateIdException {
+        if (transportById.containsKey(transport.id)) {
+            throw new DuplicateIdException(transport.id);
+        }
         allTransports.add(transport);
         transportById.put(transport.id, transport);
         uniqueTransportTypes.add(transport.type);
@@ -24,28 +27,14 @@ public class TransportManager {
         System.out.println("---");
     }
 
-    public Transport findById(String id) {
+    public Transport findByIdOrThrow (String id) {
         System.out.println("[Map] Поиск по ID '" + id + "': ");
         Transport foundByMap = transportById.get(id);
-
-        System.out.println("[List] поиск перебором: ");
-        Transport findByList = null;
-        for (Transport t : allTransports) {
-            if (t.id.equals(id)) {
-               findByList = t;
-                break;
-            }
-        }
-
-        if (foundByMap != null) {
-            System.out.println("НАЙДЕН - " + foundByMap.getInfo());
-            if (foundByMap == findByList) {
-                System.out.println("[Важно] Оба поиска вернули один и тот же объект в памяти.");
-            }
-        } else {
-            System.out.println("НЕ НАЙДЕН");
+        if (foundByMap == null) {
+            throw new TransportNotFoundException(id);
         }
         return foundByMap;
+
     }
 
     public void printUniqueTypes() {
@@ -99,6 +88,20 @@ public class TransportManager {
                 .filter(Objects :: nonNull)
                 .distinct()
                 .collect(Collectors.toList());
+    }
+
+    public void safeAddTransport(Transport transport) {
+        try {
+            addTransport(transport);
+            System.out.println("Успешно добавлен: " + transport.getInfo());
+        } catch (DuplicateIdException e) {
+            System.err.println("Ошибка: " + e.getMessage());
+            System.out.println("Пытаемся добавить с модифицированным ID ...");
+            String newId = transport.id + "_" + System.currentTimeMillis();
+            transport.id = newId;
+            allTransports.add(transport);
+            transportById.put(newId, transport);
+        }
     }
 
 
