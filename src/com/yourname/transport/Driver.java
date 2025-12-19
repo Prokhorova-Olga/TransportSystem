@@ -1,14 +1,22 @@
 package com.yourname.transport;
 
+import com.yourname.transport.exceptions.ValidationException;
+import com.yourname.transport.validators.DriverValidator;
+import com.yourname.transport.validators.Validator;
+
 import java.util.Objects;
+
+
 
 public class Driver {
     public String licenseId;
     public String name;
+    public static final Validator<Driver> VALIDATOR = new DriverValidator();
 
     public Driver(String licenseId, String name) {
         this.licenseId = licenseId;
         this.name = name;
+        validate();
     }
 
     public String getLicenseId() {
@@ -21,10 +29,22 @@ public class Driver {
 
     public void setLicenseId(String licenseId) {
         this.licenseId = licenseId;
+        validate();
     }
 
     public void setName(String name) {
         this.name = name;
+        validate();
+
+    }
+
+    private void validate() {
+        try {
+            VALIDATOR.validate(this);
+        } catch (ValidationException e) {
+            System.err.println("Ошибка валидации водителя: " + e.getMessage());
+            throw e;
+        }
     }
 
     @Override

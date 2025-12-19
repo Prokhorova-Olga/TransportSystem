@@ -1,11 +1,22 @@
 package com.yourname.transport;
 
+import com.yourname.transport.validators.CarValidator;
+import com.yourname.transport.validators.DriverValidator;
+import com.yourname.transport.validators.Validator;
+
+
+
 public class Car extends Vehicle implements Repairable {
     private int numberOfDoors;
     private String bodyType;
     private String complete;
     private double engineCapacity;
     private Driver driver;
+    private static Validator<Car> carValidator;
+
+    static {
+        carValidator = new CarValidator(new DriverValidator());
+    }
 
     public Car(String id, String type, String model, String color, String producerCountry,
                double engineVolume, int numberOfDoors, String bodyType,
@@ -16,6 +27,13 @@ public class Car extends Vehicle implements Repairable {
         this.complete = complete;
         this.engineCapacity = engineCapacity;
         this.driver = driver;
+        validate();
+    }
+
+    private void validate() {
+        if (carValidator != null) {
+            carValidator.validate(this);
+        }
     }
 
     public Driver getDriver() {
@@ -24,6 +42,7 @@ public class Car extends Vehicle implements Repairable {
 
     public void setDriver(Driver driver) {
         this.driver = driver;
+        validate();
     }
 
     @Override
@@ -58,6 +77,7 @@ public class Car extends Vehicle implements Repairable {
 
     public void setTheAlarm() {
         System.out.println("Сигнализация активирована");
+        validate();
 
     }
 
@@ -72,6 +92,7 @@ public class Car extends Vehicle implements Repairable {
 
     public void setNumberOfDoors(int numberOfDoors) {
         this.numberOfDoors = numberOfDoors;
+        validate();
     }
 
     public String getBodyType() {
@@ -80,6 +101,7 @@ public class Car extends Vehicle implements Repairable {
 
     public void setBodyType(String bodyType) {
         this.bodyType = bodyType;
+        validate();
     }
 
     public String getComplete() {
@@ -88,6 +110,7 @@ public class Car extends Vehicle implements Repairable {
 
     public void setComplete(String complete) {
         this.complete = complete;
+        validate();
     }
 
     public double getEngineCapacity() {
@@ -96,5 +119,6 @@ public class Car extends Vehicle implements Repairable {
 
     public void setEngineCapacity(double engineCapacity) {
         this.engineCapacity = engineCapacity;
+        validate();
     }
 }

@@ -18,6 +18,14 @@ public abstract class Vehicle extends Transport {
         return color;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
 
 
 }
